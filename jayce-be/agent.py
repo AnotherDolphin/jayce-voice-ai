@@ -12,10 +12,31 @@ from livekit.agents import (
 from livekit.agents.pipeline import VoicePipelineAgent
 from livekit.plugins import openai, deepgram, silero
 
-from typing import Annotated
 
 load_dotenv(dotenv_path=".env.local")
 logger = logging.getLogger("voice-agent")
+
+# from typing import Annotated
+# class AssistantFnc(llm.FunctionContext):
+    @llm.ai_callable()
+    async def get_user_location(self,
+        high_accuracy: Annotated[
+            bool, llm.TypeInfo(description="Whether to use high accuracy mode, which is slower")
+        ] = False
+    ):
+        """Retrieve the user's current geolocation as lat/lng."""
+        try:
+            return await ctx.room.local_participant.perform_rpc(
+                destination_identity=participant.identity,
+                method="getUserLocation",
+                payload=json.dumps({
+                    "highAccuracy": high_accuracy
+                }),
+                response_timeout=10.0 if high_accuracy else 5.0,
+            )
+        except Exception:
+            return "Unable to retrieve user location"
+
 
 def prewarm(proc: JobProcess):
     proc.userdata["vad"] = silero.VAD.load()
