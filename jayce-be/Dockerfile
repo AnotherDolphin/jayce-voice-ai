@@ -1,4 +1,3 @@
-# filepath: /c:/Users/abdul/Desktop/task projects/jayce-voice-ai/jayce-be/Dockerfile
 FROM python:3.9-slim
 
 WORKDIR /app
