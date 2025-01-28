@@ -1,15 +1,29 @@
-## How to use
+## Jayce - AI Voice Assistant
 
-1. Make sure to install the LiveKit [prerequisites](https://docs.livekit.io/agents/quickstarts/voice-agent/#prerequisites)(https://docs.livekit.io/agents/quickstarts/voice-agent/#prerequisites)
+Jayce is an AI Voice Assistant that leverages multiple technologies and services to provide a seamless voice interaction experience. Below are the main components and setup instructions for the project.
 
-## Backend (Python) Setup Instructions
+[Try Jayce](https://jayce-fe.vercel.app/)
 
-1. Create a virtual environment:
+### Components
+
+1. **LiveKit WebRTC Server**: Handles voice communication between the user and the AI model using the LiveKit SDK to establish a WebRTC connection. Deployed on a Google Cloud VM instance.
+2. **Custom Voice Agent Backend**: Manages voice communication and uses OpenAI's ChatGPT model to generate responses. Deployed in Python on Google Cloud VM instance.
+3. **Next.js Frontend**: Provides the web interface for user interaction, built with Next.js and LiveKit's library to communicate with the backend service. Deployed on Vercel.
+
+## Development
+
+### Prerequisites
+
+Ensure you have the necessary prerequisites installed as per the [LiveKit documentation](https://docs.livekit.io/agents/quickstarts/voice-agent/#prerequisites).
+
+### Backend (Python) Setup Instructions
+
+1. **Create a virtual environment**:
     ```sh
     python -m venv venv
     ```
 
-2. Activate the virtual environment:
+2. **Activate the virtual environment**:
     - On Windows:
         ```sh
         venv\Scripts\Activate.ps1
@@ -19,28 +33,53 @@
         source venv/bin/activate
         ```
 
-3. Install the required dependencies:
+3. **Install the required dependencies**:
     ```sh
     python -m pip install -r requirements.txt
     ```
 
-4. Run the development server:
+4. **Run the development server**:
     ```sh
     python agent.py dev
     ```
 
-## Frontend (Next.js) Setup Instructions
+### Frontend (Next.js) Setup Instructions
 
-1. Install the required dependencies:
+1. **Install the required dependencies**:
     ```sh
     npm install
     ```
 
-2. Run the development server:
+2. **Run the development server**:
     ```sh
     npm run dev
     ```
 
-docker build -t jayce-voice-ai .
+### Deployment
 
-docker run -d --name jayce-voice-ai --env-file .env.local -p 8080:8080 jayce-voice-ai
+#### LiveKit Server
+
+Deployed on a Google Cloud VM instance. Follow the steps in this [guide](https://medium.com/@kesaralive/hosting-livekit-server-on-google-cloud-a-step-by-step-guide-52c5b3746a3e).
+
+#### Custom Voice Agent Backend
+
+1. Create a Google Cloud VM instance.
+2. Upload `agent.py`, `requirements.txt`, and `.env.local` files.
+3. Run the Python script with `nohup` to keep it running after closing the SSH terminal:
+    ```sh
+    nohup python3 agent.py prod &
+    ```
+
+#### Assistant Frontend
+
+Deployed on Vercel at [https://jayce-fe.vercel.app/](https://jayce-fe.vercel.app/). To deploy your own instance, follow the [Vercel deployment guide](https://nextjs.org/docs/deployment) or run the following command:
+
+```sh
+npx vercel
+```
+
+### Costs
+
+- ChatGPT API credits
+- Domain purchase (intact.website)
+- Two Google Cloud VM instances for hosting the LiveKit server and Custom Voice Agent Backend
