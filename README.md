@@ -83,3 +83,9 @@ npx vercel
 - ChatGPT API credits
 - Domain purchase (intact.website)
 - Two Google Cloud VM instances for hosting the LiveKit server and Custom Voice Agent Backend
+
+### Challenges
+
+- **LiveKit Server**: Setting up a deployed LiveKit server and establishing a WebRTC connection was challenging due to the lack of detailed documentation, especially for each type of cloud service provider.
+- **Voice Agent Backend**: Integrating the ChatGPT model API only worked when paying for credits, and no free deployment service was seamless enough to host the LiveKit Server and the Voice Agent Backend.
+- **Time Constraints**: The project is meant to be completed in a short time frame, which made it a challenge to fully explore configurations with multiple cloud options and service providers, customize the assistant's responses, integrate more external features and APIs, or create a more polished user interface.
